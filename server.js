@@ -37,6 +37,17 @@ app.get("/", async (req, res) => {
     }
   });
 
+  app.delete("/deleteById/:id", async (req, res) => {
+    try{
+        const data= await add.findByIdAndDelete({_id:req.params.id});
+        res.status(200).send(data);
+    }
+    catch(err)
+    {
+      console.log(err,"something went wrong");
+    }
+  });
+
 //for update
 
 app.post("/updateEvent/:id",async(req,res)=>{
