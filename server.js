@@ -1,9 +1,11 @@
 import express from "express";
 import mongoose from 'mongoose';
 import add from "./schema.js";
+import cors from "cors";
 const app=express();
 const port=5500;
 app.use(express.json());
+app.use(cors());
 app.post("/eventCreation",async(req,res)=>{
     try{
         const data= await add.create(req.body);
@@ -36,6 +38,18 @@ app.get("/", async (req, res) => {
       console.log(err,"something went wrong");
     }
   });
+
+  app.get("/getByDate", async (req, res) => {
+    try{
+        const data= await add.find({date:req.body.date});
+        res.status(200).send(data);
+    }
+    catch(err)
+    {
+      console.log(err,"something went wrong");
+    }
+  });
+
 
   app.delete("/deleteById/:id", async (req, res) => {
     try{

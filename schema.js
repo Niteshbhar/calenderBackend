@@ -24,8 +24,11 @@ const addEntry = new mongoose.Schema({
    {
     type:String,
     
-   }
-    
+   },
+   date:
+{
+    type:String
+}    
 },
 
      {timestamps: true}
