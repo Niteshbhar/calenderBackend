@@ -15,8 +15,15 @@ app.post("/eventCreation",async(req,res)=>{
     }
 });
 
-app.get("/", (req, res) => {
-    res.send("Server is Working");
+app.get("/", async (req, res) => {
+    try{
+        const data= await add.find();
+        res.status(200).send(data);
+    }
+    catch(err)
+    {
+      console.log(err,"something went wrong");
+    }
   });
 const Mongo_Url = "mongodb+srv://abhinavagni4450:PXZotNtNVhBgvSwu@cluster0.rdvedcr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
