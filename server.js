@@ -39,16 +39,23 @@ app.get("/", async (req, res) => {
     }
   });
 
-  app.get("/getByDate", async (req, res) => {
-    try{
-        const data= await add.find({date:req.body.date});
-        res.status(200).send(data);
-    }
-    catch(err)
-    {
-      console.log(err,"something went wrong");
+  app.get("/getByDate/:date", async (req, res) => {
+    try {
+      const date = req.params.date;
+      console.log(`Fetching data for date: ${date}`);
+      const data = await add.find({ date: date });
+      
+      if (data.length === 0) {
+        console.log(`No data found for date: ${date}`);
+      }
+      
+      res.status(200).send(data);
+    } catch (err) {
+      console.error(err, "Something went wrong");
+      res.status(500).send("An error occurred while fetching data");
     }
   });
+  
 
 
   app.delete("/deleteById/:id", async (req, res) => {
