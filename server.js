@@ -3,9 +3,11 @@ import mongoose from 'mongoose';
 import add from "./schema.js";
 import cors from "cors";
 const app=express();
-const port=5500;
+const port=process.env.PORT || 5500;
 app.use(express.json());
 app.use(cors());
+
+// for creation
 app.post("/eventCreation",async(req,res)=>{
     try{
         const data= await add.create(req.body);
@@ -17,6 +19,7 @@ app.post("/eventCreation",async(req,res)=>{
     }
 });
 
+// to get all data
 app.get("/", async (req, res) => {
     try{
         const data= await add.find();
@@ -28,6 +31,7 @@ app.get("/", async (req, res) => {
     }
   });
 
+  // to get data by id
   app.get("/getById/:id", async (req, res) => {
     try{
         const data= await add.findById({_id:req.params.id});
@@ -38,7 +42,8 @@ app.get("/", async (req, res) => {
       console.log(err,"something went wrong");
     }
   });
-
+  
+  // get data by date(DD-MM-YYYY)
   app.get("/getByDate/:date", async (req, res) => {
     try {
       const date = req.params.date;
@@ -57,7 +62,7 @@ app.get("/", async (req, res) => {
   });
   
 
-
+// to delete the event by id
   app.delete("/deleteById/:id", async (req, res) => {
     try{
         const data= await add.findByIdAndDelete({_id:req.params.id});
@@ -69,12 +74,11 @@ app.get("/", async (req, res) => {
     }
   });
 
-//for update
 
+//for update
 app.post("/updateEvent/:id",async(req,res)=>{
     try {
         let Data = req.body;
-    
         // Ensure that _id is not part of the update data
         delete Data._id;
     
